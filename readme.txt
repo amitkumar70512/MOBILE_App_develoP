@@ -1,1 +1,2 @@
-hi all, welcome to the world of app development...
+Classroom mobile app ysing flutter
+nodejs and mysql (for now :))
