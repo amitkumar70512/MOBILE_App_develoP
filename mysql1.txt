@@ -1,0 +1,66 @@
+create database appdev;
+
+use appdev;
+
+
+create table sign_in_faculty(
+uid varchar(10) not null unique,
+email varchar(30) not null,
+password  varchar(80) not null ,
+name varchar(30) not null unique,
+status boolean 
+);
+desc sign_in_faculty;
+select * from sign_in_faculty;
+
+
+
+
+drop table faculty_on_unique_day;
+
+create table faculty_on_unique_day (
+uid varchar(10) not null ,
+day int not null,
+subject varchar(30) not null,
+section varchar(3) not null ,
+start_time time not null,
+end_time time not null,
+foreign key (uid) references sign_in_faculty(uid) ,
+primary key(uid,day,start_time)
+);
+desc branch;
+insert into faculty_on_unique_day values ('1bm19fa014',1,'tfcs','4a','085500','095000');
+insert into faculty_on_unique_day values ('1bm19fa014',6,'anisha biography','4a','155000','163000');
+select * from faculty_on_unique_day;
+
+
+create table usn_list(
+student_name varchar(30) not null,
+usn varchar(10) not null unique
+);
+desc usn_list;
+
+create table 5A(
+usn varchar(10) not null ,
+date date not null,
+subject varchar(30) not null,
+foreign key (usn) references  usn_list(usn),
+primary key(usn,date,subject)
+);
+desc 5A;
+
+create table 5B(
+usn varchar(10) not null ,
+date date not null,
+subject varchar(30) not null,
+foreign key (usn) references  usn_list(usn),
+primary key(usn,date,subject)
+);
+
+create table 5C(
+usn varchar(10) not null ,
+date date not null,
+subject varchar(30) not null,
+foreign key (usn) references  usn_list(usn),
+primary key(usn,date,subject)
+);
