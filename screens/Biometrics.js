@@ -28,6 +28,7 @@ const Biometrics = () => {
       });
 
       const fallBackToDefaultAuth = () => {
+       
         console.log('fall back to password authentication');
       };
     
@@ -57,9 +58,10 @@ const Biometrics = () => {
         let supportedBiometrics;
         if (isBiometricAvailable)
           supportedBiometrics = await LocalAuthentication.supportedAuthenticationTypesAsync();
-    
+           console.log(supportedBiometrics)
         // Check Biometrics are saved locally in user's device
         const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+        console.log(savedBiometrics);
         if (!savedBiometrics)
           return alertComponent(
             'Biometric record not found',
@@ -114,8 +116,9 @@ const Biometrics = () => {
               }}
             >
               <Button
-                title="Biometric authentication to launch scanner"
+                title="Click to launch scanner"
                 color="#03989E"
+                
                 onPress={handleBiometricAuth}
               />
             </TouchableHighlight>
@@ -140,7 +143,7 @@ const Biometrics = () => {
           backgroundColor: '#03989E',
           width: '60%',
           paddingLeft: 15,
-          borderRadius: 10,
+        
           paddingBottom: 30,
           alignItems: 'center',
           marginTop: 40,
@@ -149,6 +152,7 @@ const Biometrics = () => {
         image:{
           width:200,
           height:200,
+          borderRadius: 10,
           paddingTop: 170,
           paddingBottom:70,
           alignSelf:'center',

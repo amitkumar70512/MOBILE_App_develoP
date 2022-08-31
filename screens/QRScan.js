@@ -5,7 +5,8 @@ import { KeyboardAvoidingView, TextInput, TouchableOpacity , Image} from 'react-
 import { auth } from '../firebase'
 import { db } from '../firebase'
 import { doc, collection, query, where, getDoc, getDocs ,setDoc} from "firebase/firestore/lite";
-
+import { iosocket } from '../App';
+import { USN } from '../App';
 import {
     StyleSheet,
     Text,
@@ -18,6 +19,8 @@ import {
   } from 'react-native';
 
   const QRScan = () => {
+    
+    
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const navigation = useNavigation()
@@ -28,10 +31,27 @@ import {
       })();
     }, []);
 
+    ///
+
+    const handleBarCode = async ({ type, data }) => {
+      setScanned(true);
+      console.log(data);
+      
+      var id=iosocket.io.engine.id;
+        const obj={id:id,key:data,usn:USN};/// object is created to send it ot server using iosockets
+        iosocket.emit('client_attendance',obj);// obj is sent to server
+        
+        alert('qr scanned successfully');
+        navigation.replace("Demo");
+    };
+
+    ///
+
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
         console.log(data);
-        
+        const obj={data:data,name:'amitkumar',usn:'1bm19cs015'}
+        iosocket.emit('client_attendance',obj);
           const q_snapshot = await getDoc(doc(db,'QR_key',data));
               if(q_snapshot.exists()){
                 if(q_snapshot.data().valid=="1"){
@@ -52,6 +72,8 @@ import {
                   }
                   else{
                     //give attendance
+                    // let me use socket to notify server abt myself, that im present
+                    
                     await setDoc(doc(db,'Attendance',teacher_usn,section,date,"attended",stud_usn),{
                       
                     });
@@ -92,7 +114,7 @@ import {
       return (
         <View style={styles.container}>
           <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            onBarCodeScanned={scanned ? undefined : handleBarCode}
             style={StyleSheet.absoluteFillObject}
           />
          

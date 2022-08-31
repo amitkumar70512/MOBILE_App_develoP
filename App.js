@@ -10,9 +10,10 @@ import AdminSignout from "./screens/AdminSignout";
 import ListStatus from "./screens/ListStatus";
 import Splash from "./screens/Splash";
 import DemoScreen from "./screens/Demo";
-
+import io from 'socket.io-client/dist/socket.io';
+const socket=io("http://192.168.43.253:3000");
 const Stack = createNativeStackNavigator();
-
+const usn='1BM19CS015';
 export default function App() {
  
 
@@ -62,3 +63,6 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   )}
+
+  export const iosocket=socket
+  export const USN=usn

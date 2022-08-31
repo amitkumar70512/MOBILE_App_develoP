@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View ,ImageBackground} from 'react-native'
 import { exp } from 'react-native/Libraries/Animated/Easing'
-import io from 'socket.io-client/dist/socket.io';
+import { iosocket  } from '../App'
 
 
 const DemoScreen = ()=>{
@@ -11,23 +11,23 @@ const DemoScreen = ()=>{
  const navigation = useNavigation()
   const goHomeHandler=()=>{
      console.log("inside go home handler");
-    const socket=io("https://checkit-bmsce.herokuapp.com");
-    socket.emit('client_message',"i am from app side bro");
+    
+    iosocket.emit('client_message',"i am from app side bro");
     
       if(code=="amit")
       {
-        socket.emit('client)_messaage',"hi ur unique code has been matched , oowowwwooww");
+        iosocket.emit('client)_messaage',"hi ur unique code has been matched , oowowwwooww");
       }
       else{
-        socket.emit('client)_messaage',"no no dont type this ok");
+        iosocket.emit('client)_messaage',"no no dont type this ok");
       }
-       socket.on('ServerEvent',(data)=>{
+       iosocket.on('ServerEvent',(data)=>{
          console.log("receiving student details  from checkit server");
-         console.log(data);
+         
          console.log("data received ");
        })
      
-  
+    navigation.replace("QR");
   }
 
   return(
